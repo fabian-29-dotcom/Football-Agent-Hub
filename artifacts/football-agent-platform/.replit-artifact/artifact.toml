@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Football Agent Platform"
+description = "A premium responsive workspace for football agents to manage players, clubs, opportunities, deals, follow-ups, and AI-powered recruitment matching using realistic demo data."
+version = "1.0.0"
+id = "artifacts/football-agent-platform"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25038
+
+[services.development]
+run = "pnpm --filter @workspace/football-agent-platform run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/football-agent-platform", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/football-agent-platform/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25038"
+BASE_PATH = "/"
