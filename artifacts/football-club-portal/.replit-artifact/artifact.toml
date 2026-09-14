@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/club-portal/"
+title = "Football Club Portal"
+description = "A recruitment workspace for football clubs to manage open squad needs, review player presentations, build shortlists, and communicate with agents."
+version = "1.0.0"
+id = "artifacts/football-club-portal"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/club-portal/" ]
+localPort = 25475
+
+[services.development]
+run = "pnpm --filter @workspace/football-club-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/football-club-portal", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/football-club-portal/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25475"
+BASE_PATH = "/club-portal/"
