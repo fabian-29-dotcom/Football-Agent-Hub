@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/player-portal/"
+title = "Football Player Portal"
+description = "A responsive player-facing portal for footballers to manage their profile, opportunities, documents, club conversations, and next actions with their agent."
+version = "1.0.0"
+id = "artifacts/football-player-portal"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/player-portal/" ]
+localPort = 24926
+
+[services.development]
+run = "pnpm --filter @workspace/football-player-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/football-player-portal", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/football-player-portal/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24926"
+BASE_PATH = "/player-portal/"
